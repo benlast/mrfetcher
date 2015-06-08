@@ -11,15 +11,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box_url = "https://atlas.hashicorp.com/ubuntu/boxes/trusty64"
   config.vm.box = "ubuntu/trusty64"
-  config.vm.host_name = "pusheen-vagrant"
+  config.vm.host_name = "mrfetcher-vagrant"
 
   config.vm.network "private_network", ip: "192.168.6.3"
 
   # config.vm.forward_port 80, 8280
   # web tier
-  config.vm.network "forwarded_port", guest: 5000, host: 5000
+  # config.vm.network "forwarded_port", guest: 5000, host: 5000
   # db
-  config.vm.network "forwarded_port", guest: 5432, host: 5432
+  # config.vm.network "forwarded_port", guest: 5432, host: 5432
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure VM box
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "2"]
+    vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "2"]
   end
 
   # Provision with a shell script
