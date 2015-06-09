@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.vagrant" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 2.7.9 Vagrant VM at ~/PyCharmProjects/mrfetcher (/home/vagrant/venv/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 2.7.9 Vagrant VM at ~/PycharmProjects/MrFetcher (/home/vagrant/venv/bin/python) (1)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">
