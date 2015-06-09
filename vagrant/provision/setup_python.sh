@@ -19,4 +19,4 @@ source ${VENV}/bin/activate
 pip install --upgrade setuptools
 pip install --upgrade `fgrep pip== requirements.txt`
 
-pip -q install --cache-dir .pipcache -r requirements.txt
+pip -q install -r requirements.txt

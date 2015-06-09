@@ -15,7 +15,7 @@ def get_pop3_messages():
      POP3_USER
      POP3_PASSWORD
     Connect to the host, retrieve a list of all the existing messages
-    and yield each one as a tuple of (message-id, headers, body)
+    and yield each one as a tuple of (message-id, lines, msg_size)
     This is a coroutine generator - after each message has been
     yielded, the caller may pass True or False back into the flow to
     indicate that the message has been successfully forwarded and may
@@ -56,7 +56,7 @@ def get_pop3_messages():
             messages, _ = pop.stat()
             for message in xrange(1, messages+1):
                 try:
-                    response, headers, body = pop.retr(message)
+                    response, lines, msg_size = pop.retr(message)
                 except poplib.error_proto as ex:
                     logging.warning(
                         'Could not retrieve message %d, error %s',
@@ -64,7 +64,7 @@ def get_pop3_messages():
                     )
                 else:
                     if response.startswith(OK):
-                        if (yield message, headers, body):
+                        if (yield message, lines, msg_size):
                             pop.dele(message)
                     else:
                         logging.warning(
