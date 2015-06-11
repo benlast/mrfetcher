@@ -45,6 +45,11 @@ def process_pop3_messages(host, port, user, password, sender):
             )
         else:
             messages, _ = pop.stat()
+
+            if messages:
+                # Start the SMTP sender
+                sender.next()
+
             for message_id in xrange(1, messages+1):
                 try:
                     response, lines, msg_size = pop.retr(message_id)
@@ -59,8 +64,8 @@ def process_pop3_messages(host, port, user, password, sender):
                             'POP3 message %d, size %d',
                             message_id, msg_size
                         )
-                        if sender.send(message_id, lines, msg_size):
-                            logging.debug('POP3 message %d to be deleted',message_id)
+                        if sender.send((message_id, lines, msg_size)):
+                            logging.debug('POP3 message %d to be deleted', message_id)
                             #pop.dele(message_id)
                     else:
                         logging.warning(

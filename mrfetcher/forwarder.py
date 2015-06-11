@@ -20,9 +20,6 @@ def forward(
         target_email_address
     )
 
-    # Get the sender coroutine to connect
-    smtp_sender.next()
-
     # Start the pop3 producer
     process_pop3_messages(
         pop3_host,

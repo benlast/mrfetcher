@@ -1,13 +1,11 @@
-import collections
+
 import logging
 import itertools
 import os
 import re
 import smtplib
 
-from werkzeug.datastructures import MultiDict
-
-HEADER_RE = re.compile(r'^[A-Za-z][-\w]*:\s*(.*)$', re.IGNORECASE)
+FROM_RE = re.compile(r'^From:\s*(.*)$', re.IGNORECASE)
 
 def send_smtp_messages(
     smtp_host,
@@ -37,21 +35,23 @@ def send_smtp_messages(
 
         can_be_deleted = False
 
-        # Extract the right values from the message lines.
-
+        # Read the headers
         raw_headers = itertools.takewhile(
-            lambda line: not line.strip(),
+            lambda line: bool(line),
             lines
         )
 
-        headers = MultiDict(
-            (match.group(1).title(), match.group(2).strip())
-            for match in (HEADER_RE.match(header_line)
-                          for header_line in raw_headers)
-            if match is not None
+        # Grab the (first) From address
+        from_address = next(
+            (
+                match.group(1).strip()
+                for match in (FROM_RE.match(header_line)
+                              for header_line in raw_headers)
+                if match is not None
+            ),
+            None
         )
 
-        from_address = headers.get('From', None)
         if not from_address:
             logging.debug(
                 'SMTP: message %d, missing \'From\' address, skipping',
