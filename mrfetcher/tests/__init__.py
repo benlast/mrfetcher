@@ -98,7 +98,7 @@ class TestPOP3(TestCase):
         user = os.environ['POP3_USER'] = random_string()
         password = os.environ['POP3_PASSWORD'] = random_string()
 
-        messages = list(pop3.get_pop3_messages())
+        messages = list(pop3.process_pop3_messages())
 
         # Verify that we logged in correctly
         self.assertEqual(MockPOP.instance._host, host)
